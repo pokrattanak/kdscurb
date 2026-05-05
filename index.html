@@ -33,6 +33,8 @@
         .btn-submit { color: white; border: none; padding: 14px; width: 100%; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 5px; }
         .btn-aba { background: var(--aba); }
         .btn-cod { background: #27ae60; }
+        
+        .hint-text { font-size: 10px; color: #d63031; text-align: center; margin-top: 5px; display: none; font-weight: bold; }
 
         #loading-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); z-index: 1000; flex-direction: column; align-items: center; justify-content: center; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -73,6 +75,7 @@
     </div>
     
     <button id="main-submit-btn" class="btn-submit btn-aba" onclick="handleSubmit()">សូមជ្រើសរើសតំបន់</button>
+    <div id="province-hint" class="hint-text">⚠️ បង់ប្រាក់រួច សូមចុចថយក្រោយវិញ ដើម្បីផ្ញើវិក្កយបត្រមកកាន់ Telegram ហាង</div>
 
     <div style="text-align:center; font-size:11px; margin-top:8px; color:#999;">
         ជំនួយ៖ <a href="tel:086882636" style="color:var(--gold); text-decoration:none;">086 882 636</a>
@@ -95,13 +98,10 @@
     const typeDiv = document.getElementById('type-container');
     types.forEach(t => { typeDiv.innerHTML += `<div class="type-item"><span>${t}</span><input type="text" class="type-input" value="0" oninput="convertAndValidate(this)"></div>`; });
 
-    // មុខងារប្តូរលេខខ្មែរទៅលេខអង់គ្លេស
     function convertAndValidate(el) {
         const khNumbers = {'០':'0','១':'1','២':'2','៣':'3','៤':'4','៥':'5','៦':'6','៧':'7','៨':'8','៩':'9'};
         let val = el.value;
-        // ប្តូរខ្មែរ -> អង់គ្លេស
         for (let key in khNumbers) { val = val.split(key).join(khNumbers[key]); }
-        // យកតែលេខអង់គ្លេស
         el.value = val.replace(/[^0-9]/g, '');
     }
 
@@ -109,6 +109,8 @@
         selectedArea = area;
         document.getElementById('btn-pp').classList.toggle('active', area === 'ភ្នំពេញ');
         document.getElementById('btn-province').classList.toggle('active', area === 'ខេត្ត');
+        document.getElementById('province-hint').style.display = (area === 'ខេត្ត') ? 'block' : 'none';
+        
         const btn = document.getElementById('main-submit-btn');
         btn.innerText = area === 'ភ្នំពេញ' ? "កម្ម៉ង់ឥឡូវ (បានឥវ៉ាន់ចាំឱ្យលុយ)" : "បង់ប្រាក់តាម ABA ឥឡូវនេះ";
         btn.className = area === 'ភ្នំពេញ' ? "btn-submit btn-cod" : "btn-submit btn-aba";
@@ -121,7 +123,8 @@
         
         document.getElementById('loading-overlay').style.display = 'flex';
         if (selectedArea === 'ខេត្ត') { 
-            isWaiting = true; window.location.href = abaLinks[selectedQty]; 
+            isWaiting = true; 
+            window.location.href = abaLinks[selectedQty]; 
         } else { 
             await sendToTelegram("COD (អ្នកភ្នំពេញ)"); 
             alert("ជោគជ័យ! យើងនឹងតេទៅបញ្ជាក់ក្នុងពេលឆាប់ៗ។"); 
@@ -129,7 +132,16 @@
         }
     }
 
-    document.addEventListener("visibilitychange", function() { if (document.visibilityState === 'visible' && isWaiting) { sendToTelegram("ABA (បានចុច)"); window.location.href = "https://t.me/+85586882636"; } });
+    // មុខងារពេលអតិថិជនបង់លុយរួចហើយចុច Back មកវិញ
+    document.addEventListener("visibilitychange", function() { 
+        if (document.visibilityState === 'visible' && isWaiting) { 
+            sendToTelegram("បង់តាម ABA (រង់ចាំការបញ្ជាក់វិក្កយបត្រ)"); 
+            isWaiting = false;
+            document.getElementById('loading-overlay').style.display = 'none';
+            alert("ការបង់ប្រាក់បានបញ្ជូន! សូមផ្ញើរូបភាពវិក្កយបត្រ (Screenshot) មកកាន់ Telegram ហាង។");
+            window.location.href = "https://t.me/+85586882636"; 
+        } 
+    });
 
     async function sendToTelegram(status) {
         const phone = document.getElementById('phone').value, addr = document.getElementById('address').value;
