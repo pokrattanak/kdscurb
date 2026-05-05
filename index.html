@@ -3,120 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>KD Natural Scrub - បញ្ជាទិញ</title>
+    <title>KD Natural Scrub</title>
     <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { --aba: #005d7d; --acleda: #003b71; --gold: #b8860b; --dark: #2c3e50; }
-        body { font-family: 'Kantumruy Pro', sans-serif; background: #ffffff; margin: 0; padding: 0; color: #333; overflow-x: hidden; }
-        .header-container { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; border-bottom: 1px solid #eee; background: #fffcf5; }
-        .side-img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; border: 1px solid var(--gold); }
-        .header-title { flex: 1; text-align: center; font-size: 14px; font-weight: bold; color: var(--dark); line-height: 1.4; }
-        .header-title span { display: block; font-size: 16px; color: var(--gold); }
-        .container { max-width: 450px; margin: auto; padding: 5px 10px; }
-        .section { background: #fafafa; padding: 8px; border-radius: 12px; border: 1px solid #f0f0f0; margin-bottom: 6px; }
-        .title { font-weight: bold; color: var(--gold); margin-bottom: 5px; font-size: 12px; display: block; }
-        .qty-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
-        .qty-btn { padding: 8px 1px; border: 1px solid #ddd; background: white; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; }
-        .qty-btn.active { background: var(--gold); color: white; border-color: var(--gold); }
-        .type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
-        .type-item { display: flex; justify-content: space-between; align-items: center; background: #fff; border: 1px solid #eee; padding: 3px 8px; border-radius: 6px; font-size: 12px; }
-        .type-input { width: 35px; text-align: center; border: 1px solid #ccc; border-radius: 4px; padding: 3px; font-weight: bold; outline: none; }
-        .location-selector { display: flex; gap: 5px; margin-bottom: 5px; }
-        .loc-btn { flex: 1; padding: 10px 2px; border: 1px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 10px; font-weight: bold; }
+        body { font-family: 'Kantumruy Pro', sans-serif; background: #fff; margin: 0; padding: 0; font-size: 13px; }
+        .header { display: flex; align-items: center; justify-content: center; padding: 5px; background: #fffcf5; border-bottom: 1px solid #eee; gap: 10px; }
+        .side-img { width: 40px; height: 40px; border-radius: 5px; border: 1px solid var(--gold); }
+        .header-title { text-align: center; font-weight: bold; line-height: 1.2; }
+        .header-title b { color: var(--gold); font-size: 15px; }
+        .container { max-width: 450px; margin: auto; padding: 5px; }
+        .section { background: #fafafa; padding: 6px; border-radius: 8px; border: 1px solid #f0f0f0; margin-bottom: 4px; }
+        .title { font-weight: bold; color: var(--gold); font-size: 11px; margin-bottom: 3px; display: block; }
+        .weight-hint { font-size: 10px; color: #555; background: #eee; padding: 2px 6px; border-radius: 4px; margin-left: 5px; }
+        .qty-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; }
+        .qty-btn { padding: 6px 0; border: 1px solid #ddd; background: #fff; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 10px; line-height: 1; }
+        .qty-btn span { display: block; font-size: 8px; font-weight: normal; margin-top: 1px; color: #666; }
+        .qty-btn.active { background: var(--gold); color: #fff; border-color: var(--gold); }
+        .qty-btn.active span { color: #fff; }
+        .type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+        .type-item { display: flex; justify-content: space-between; align-items: center; background: #fff; border: 1px solid #eee; padding: 2px 6px; border-radius: 4px; }
+        .type-input { width: 35px; text-align: center; border: 1px solid #ccc; border-radius: 3px; padding: 2px; font-weight: bold; font-size: 12px; }
+        .location-selector { display: flex; gap: 4px; margin-bottom: 4px; }
+        .loc-btn { flex: 1; padding: 8px 0; border: 1px solid #ddd; border-radius: 6px; background: #fff; cursor: pointer; font-size: 11px; font-weight: bold; }
         .loc-btn.active { border-color: var(--gold); background: #fffcf0; color: var(--gold); }
-        input { width: 100%; padding: 10px; margin: 2px 0; border-radius: 8px; border: 1px solid #eee; box-sizing: border-box; font-size: 13px; outline: none; }
-        .btn-submit { color: white; border: none; padding: 14px; width: 100%; border-radius: 10px; font-size: 14px; font-weight: bold; cursor: pointer; margin-bottom: 5px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .btn-aba { background: var(--aba); }
-        .btn-acleda { background: var(--acleda); }
+        input { width: 100%; padding: 8px; margin: 2px 0; border-radius: 6px; border: 1px solid #eee; box-sizing: border-box; font-size: 12px; }
+        .total-box { text-align: center; padding: 5px; font-size: 18px; font-weight: bold; color: var(--dark); }
+        .btn-submit { color: #fff; border: none; padding: 12px; width: 100%; border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; }
+        .btn-row { display: flex; gap: 4px; }
+        .btn-aba { background: var(--aba); flex: 1; } 
+        .btn-acleda { background: var(--acleda); flex: 1; } 
         .btn-cod { background: #27ae60; }
-        .hint-text { font-size: 10px; color: #d63031; text-align: center; margin-top: 5px; font-weight: bold; }
-        #loading-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); z-index: 1000; flex-direction: column; align-items: center; justify-content: center; }
+        .hint { font-size: 9px; color: #d63031; text-align: center; font-weight: bold; margin-top: 2px; }
+        #loading-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8); z-index: 1000; align-items: center; justify-content: center; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-<div id="loading-overlay"><div style="border: 4px solid #f3f3f3; border-top: 4px solid var(--gold); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite;"></div></div>
+<div id="loading-overlay"><div style="border: 3px solid #f3f3f3; border-top: 3px solid var(--gold); border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite;"></div></div>
 
-<div class="header-container">
+<div class="header">
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR61fIqIu9G7T-S0vEunwS1M8E6vH4-m0vW3w&s" class="side-img">
-    <div class="header-title"><span>KDស្ក្រាប់ធម្មជាតិ</span>KD Natural Scrub</div>
+    <div class="header-title"><b>KDស្ក្រាប់ធម្មជាតិ</b><br>KD Natural Scrub</div>
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR61fIqIu9G7T-S0vEunwS1M8E6vH4-m0vW3w&s" class="side-img">
 </div>
 
 <div class="container">
     <div class="section">
-        <span class="title">១. ជ្រើសរើសកញ្ចប់</span>
+        <div style="display: flex; align-items: center; margin-bottom: 5px;">
+            <span class="title">១. ជ្រើសរើសកញ្ចប់</span>
+            <span class="weight-hint">⚖️ ១កំប៉ុង = ១គីឡូក្រាម</span>
+        </div>
         <div class="qty-grid" id="qty-container"></div>
     </div>
 
     <div class="section">
-        <span class="title">២. រើសប្រភេទស្ក្រាប់ (បញ្ចូលលេខ)</span>
+        <span class="title">២. រើសប្រភេទស្ក្រាប់</span>
         <div class="type-grid" id="type-container"></div>
     </div>
 
     <div class="section">
         <div class="location-selector">
-            <button class="loc-btn" id="btn-pp" onclick="selectLoc('ភ្នំពេញ')">📍 ភ្នំពេញ (COD)</button>
+            <button class="loc-btn active" id="btn-pp" onclick="selectLoc('ភ្នំពេញ')">📍 ភ្នំពេញ (COD)</button>
             <button class="loc-btn" id="btn-province" onclick="selectLoc('ខេត្ត')">🚛 ខេត្ត (បង់មុន)</button>
         </div>
-        <input type="tel" id="phone" placeholder="លេខទូរស័ព្ទ *">
+        <input type="tel" id="phone" placeholder="លេខទូរស័ព្ទ *" oninput="toEnNum(this)">
         <input type="text" id="address" placeholder="អាសយដ្ឋានដឹកជញ្ជូន *">
     </div>
 
-    <div style="text-align: center; margin: 5px 0;"><b style="color: var(--dark); font-size: 18px;">សរុប៖ <span id="display-total">0</span> ៛</b></div>
+    <div class="total-box">សរុប៖ <span id="display-total" style="color: var(--gold);">0</span> ៛</div>
     
-    <div id="cod-group" style="display: block;">
-        <button class="btn-submit btn-cod" onclick="handleSubmit('COD')">កម្ម៉ង់ឥឡូវ (ចាំឱ្យលុយនៅភ្នំពេញ)</button>
+    <div id="cod-group">
+        <button class="btn-submit btn-cod" onclick="handleSubmit('COD (អ្នកភ្នំពេញ)')">កម្ម៉ង់ឥឡូវ (ចាំបង់លុយពេលដល់)</button>
     </div>
 
     <div id="province-group" style="display: none;">
-        <button class="btn-submit btn-aba" onclick="handleSubmit('ABA')">បង់ប្រាក់តាម ABA Mobile</button>
-        <button class="btn-submit btn-acleda" onclick="handleSubmit('AC_LEDA')">បង់តាមអេស៊ីលីដា (Acleda)</button>
-        <div class="hint-text">⚠️ បង់រួចសូមថយក្រោយវិញ ដើម្បីផ្ញើវិក្កយបត្រមក Telegram ហាង</div>
+        <div class="btn-row">
+            <button class="btn-submit btn-acleda" onclick="handleSubmit('បង់តាម Acleda')">Acleda</button>
+            <button class="btn-submit btn-aba" onclick="handleSubmit('បង់តាម ABA')">ABA Mobile</button>
+        </div>
+        <div class="hint">⚠️ បង់រួចសូមថយក្រោយវិញ ដើម្បីផ្ញើវិក្កយបត្រ</div>
     </div>
 </div>
 
 <script>
     const prices = { 1: 16000, 5: 40000, 10: 68000, 12: 72000, 20: 120000, 30: 180000, 50: 280000, 60: 336000, 120: 624000 };
-    
-    const abaLinks = { 
-        1: "https://pay.ababank.com/oRF8/t39mcrjz", 5: "https://pay.ababank.com/oRF8/b1o5fleo", 
-        10: "https://pay.ababank.com/oRF8/8v5jzs1a", 12: "https://pay.ababank.com/oRF8/lls1tbur", 
-        20: "https://pay.ababank.com/oRF8/680t8x4b", 30: "https://pay.ababank.com/oRF8/yqbo08ca", 
-        50: "https://pay.ababank.com/oRF8/78hlhjpb", 60: "https://pay.ababank.com/oRF8/d77egydd", 120: "https://pay.ababank.com/oRF8/ckm2u0p2" 
-    };
-
-    const acledaLinks = {
-        1: "https://acledabank.com.kh/acleda?payment_data=qWY5B2SAUfIhLblxzOtfux3xJRdAPs8G9Uek1toYoITHY0KWVLmEsgo99YEZnVJEt+7NRis1W6+l/bRZrqp6FwX1DhyttdftAg3Fu2mFPvcGIIUfsqMTiIXLe5kJ+H47m3o6VEdVfoBRGLaeQC5/uQAdV50MP5Z5tokPmLi73IUMMEYSsDMnGbP4bV3edyPg7khgFGna46uGsl7Gxc8ObWLbEhcPQKtZ8w8w+IC2AlN9aBBsmbQ4ylwpifEGEQcdDRHlExlx3V1v7Fzw33U8sQ==&key=khqr",
-        5: "https://acledabank.com.kh/acleda?payment_data=qWY5B2SAUfIhLblxzOtfux3xJRdAPs8G9Uek1toYoITHY0KWVLmEsgo99YEZnVJEt+7NRis1W6+l/bRZrqp6FwX1DhyttdftAg3Fu2mFPvcGIIUfsqMTiIXLe5kJ+H47T8TmQocx93E5zxF85gwOYdU1fetHB1yYJd9jP0Q0lDq2JZA5vJ4fB3e+WGwDYBf7+F7a/f3d8o/EC3cWWeqh2yTXfuuZC+3/n+bTKH1SKx/H++KQa8Raq8IrE//MCkrBil/e6f+XfsZqqXC/+YpdA==&key=khqr",
-        10: "https://acledabank.com.kh/acleda?payment_data=qWY5B2SAUfIhLblxzOtfux3xJRdAPs8G9Uek1toYoITHY0KWVLmEsgo99YEZnVJEt+7NRis1W6+l/bRZrqp6FwX1DhyttdftAg3Fu2mFPvcGIIUfsqMTiIXLe5kJ+H47+VCSBJvDhKoElx76d1v5G/+rhL7LLC36aYaXGU+RjD2irgJfM/rIXjw+xhr40fYCB1NbTkjFKyEdM0iGPWXlJifOKQfi5dUj9zOdYweEsLlrhpm+U27Bhvo5eFLF2hfY6ZxKc7KN3C2N/MzZv03hgQ==&key=khqr",
-        12: "https://acledabank.com.kh/acleda?payment_data=qWY5B2SAUfIhLblxzOtfux3xJRdAPs8G9Uek1toYoITHY0KWVLmEsgo99YEZnVJEt+7NRis1W6+l/bRZrqp6FwX1DhyttdftAg3Fu2mFPvcGIIUfsqMTiIXLe5kJ+H47acBei+krTqshf6Q+VE+UXblRxC1FNcA+TLcCrY0lMqgXoUuDJGLkB5aUB0Jy/nV4ZBwJRG7t6NYI6yOU/KaIQQXPiXO7rhT+9MSf4sVQnLQM4g0GIUIbWzuI+HNphPqjQD4jgpBiSkuLXniBt7F82A==&key=khqr",
-        20: "https://acledabank.com.kh/acleda?payment_data=qWY5B2SAUfIhLblxzOtfux3xJRdAPs8G9Uek1toYoITHY0KWVLmEsgo99YEZnVJEt+7NRis1W6+l/bRZrqp6FwX1DhyttdftAg3Fu2mFPvcGIIUfsqMTiIXLe5kJ+H47Rc7/N3bET0nyUkTAy1ga97VohyDC8T25yAQrMSL2xO0VNx9VZ3xIVGB8SVqj3NrIbkqe5d+ALvgwJMRmMW0Bn1CNPMJY/oBaquSyqkcLEclHzh6FrrQrYCz1gv9t56epyETZ5wDptxwXREoLuhN4w==&key=khqr",
-        30: "https://acledabank.com.kh/acleda?payment_data=qWY5B2SAUfIhLblxzOtfux3xJRdAPs8G9Uek1toYoITHY0KWVLmEsgo99YEZnVJEt+7NRis1W6+l/bRZrqp6FwX1DhyttdftAg3Fu2mFPvcGIIUfsqMTiIXLe5kJ+H47fG+TU4za1as7LTsEwwvK0LET+SpWkYl6adl8U2kXgM04q9Mlcn76du4hlJGowxIVuiVojXWRvLjrdllWYKrlj7g8YHNGepIySVu10YvTn6toPHb8xsMo2BnEfVIYJBK8bgOgBvJI0sDXh65LPLFj7w==&key=khqr",
-        50: "https://acledabank.com.kh/acleda?payment_data=qWY5B2SAUfIhLblxzOtfux3xJRdAPs8G9Uek1toYoITHY0KWVLmEsgo99YEZnVJEt+7NRis1W6+l/bRZrqp6FwX1DhyttdftAg3Fu2mFPvcGIIUfsqMTiIXLe5kJ+H47uO0z2u7jgna0CZPSsVXF7OWFPuvYWQTY0pUzHRSmXn12ZA8YLvgje2vwKrJUTdEF7iYsRhHK8GwlwETjvQXK92WxkyBsnrHaVlmz1qlEHFsvJFLsX0gjmr9T9bWQGk3gU6bqBoJCGlGpUy8l2lVnvg==&key=khqr",
-        60: "https://acledabank.com.kh/acleda?payment_data=qWY5B2SAUfIhLblxzOtfux3xJRdAPs8G9Uek1toYoITHY0KWVLmEsgo99YEZnVJEt+7NRis1W6+l/bRZrqp6FwX1DhyttdftAg3Fu2mFPvcGIIUfsqMTiIXLe5kJ+H47M0X78ogYLvWv+wLSpCiw+L7emvq1sAj3L0yiWPlyzInsJygk+wqQSaxmRLbT9tTfNo4pIsXG0p2XP/hyvPNwK/Yvpbd+u0O0ztBin5HCJS2bmaf8QYmz/Dn3jc+Ohc4TAep9lZW/HU6U3tE+5EufZA==&key=khqr",
-        120: "https://acledabank.com.kh/acleda?payment_data=qWY5B2SAUfIhLblxzOtfux3xJRdAPs8G9Uek1toYoITHY0KWVLmEsgo99YEZnVJEt+7NRis1W6+l/bRZrqp6FwX1DhyttdftAg3Fu2mFPvcGIIUfsqMTiIXLe5kJ+H47/gVojjGeiP8WBPhadCf6tm8hsxoLFO1HEALufxB6JAQ5ZXxv4VtdwEeG/tsnOND7tReVAUxkyChxZczISuRwdWxm8H3X3UkDMfFmibAdstERnLU1h4pK/8oSM1JQF0o0aujskOd+n32Hq8HAAfZslA==&key=khqr"
-    };
-
-    const types = ["កាហ្វេ", "ពន្លៃ", "ហាយឡាយ", "ប័រ", "អំពិលទុំ", "ស្រូវសាលី", "ស្ត្រប៊ឺរី"];
+    const abaLinks = { 1: "https://pay.ababank.com/oRF8/t39mcrjz", 5: "https://pay.ababank.com/oRF8/b1o5fleo", 10: "https://pay.ababank.com/oRF8/8v5jzs1a", 12: "https://pay.ababank.com/oRF8/lls1tbur", 20: "https://pay.ababank.com/oRF8/680t8x4b", 30: "https://pay.ababank.com/oRF8/yqbo08ca", 50: "https://pay.ababank.com/oRF8/78hlhjpb", 60: "https://pay.ababank.com/oRF8/d77egydd", 120: "https://pay.ababank.com/oRF8/ckm2u0p2" };
+    const acledaLinks = { 1: "https://acledabank.com.kh/acleda?payment_data=qWY5B2SAUfIhLblxzOtfux3xJRdAPs8G9Uek1toYoITHY0KWVLmEsgo99YEZnVJEt+7NRis1W6+l/bRZrqp6FwX1DhyttdftAg3Fu2mFPvcGIIUfsqMTiIXLe5kJ+H47m3o6VEdVfoBRGLaeQC5/uQAdV50MP5Z5tokPmLi73IUMMEYSsDMnGbP4bV3edyPg7khgFGna46uGsl7Gxc8ObWLbEhcPQKtZ8w8w+IC2AlN9aBBsmbQ4ylwpifEGEQcdDRHlExlx3V1v7Fzw33U8sQ==&key=khqr", 5: "https://acledabank.com.kh/acleda?payment_data=qWY5B2SAUfIhLblxzOtfux3xJRdAPs8G9Uek1toYoITHY0KWVLmEsgo99YEZnVJEt+7NRis1W6+l/bRZrqp6FwX1DhyttdftAg3Fu2mFPvcGIIUfsqMTiIXLe5kJ+H47T8TmQocx93E5zxF85gwOYdU1fetHB1yYJd9jP0Q0lDq2JZA5vJ4fB3e+WGwDYBf7+F7a/f3d8o/EC3cWWeqh2yTXfuuZC+3/n+bTKH1SKx/H++KQa8Raq8IrE//MCkrBil/e6f+XfsZqqXC/+YpdA==&key=khqr", 10: "https://acledabank.com.kh/acleda?payment_data=qWY5B2SAUfIhLblxzOtfux3xJRdAPs8G9Uek1toYoITHY0KWVLmEsgo99YEZnVJEt+7NRis1W6+l/bRZrqp6FwX1DhyttdftAg3Fu2mFPvcGIIUfsqMTiIXLe5kJ+H47+VCSBJvDhKoElx76d1v5G/+rhL7LLC36aYaXGU+RjD2irgJfM/rIXjw+xhr40fYCB1NbTkjFKyEdM0iGPWXlJifOKQfi5dUj9zOdYweEsLlrhpm+U27Bhvo5eFLF2hfY6ZxKc7KN3C2N/MzZv03hgQ==&key=khqr", 12: "https://acledabank.com.kh/acleda?payment_data=qWY5B2SAUfIhLblxzOtfux3xJRdAPs8G9Uek1toYoITHY0KWVLmEsgo99YEZnVJEt+7NRis1W6+l/bRZrqp6FwX1DhyttdftAg3Fu2mFPvcGIIUfsqMTiIXLe5kJ+H47acBei+krTqshf6Q+VE+UXblRxC1FNcA+TLcCrY0lMqgXoUuDJGLkB5aUB0Jy/nV4ZBwJRG7t6NYI6yOU/KaIQQXPiXO7rhT+9MSf4sVQnLQM4g0GIUIbWzuI+HNphPqjQD4jgpBiSkuLXniBt7F82A==&key=khqr", 20: "https://acledabank.com.kh/acleda?payment_data=qWY5B2SAUfIhLblxzOtfux3xJRdAPs8G9Uek1toYoITHY0KWVLmEsgo99YEZnVJEt+7NRis1W6+l/bRZrqp6FwX1DhyttdftAg3Fu2mFPvcGIIUfsqMTiIXLe5kJ+H47Rc7/N3bET0nyUkTAy1ga97VohyDC8T25yAQrMSL2xO0VNx9VZ3xIVGB8SVqj3NrIbkqe5d+ALvgwJMRmMW0Bn1CNPMJY/oBaquSyqkcLEclHzh6FrrQrYCz1gv9t56epyETZ5wDptxwXREoLuhN4w==&key=khqr", 30: "https://acledabank.com.kh/acleda?payment_data=qWY5B2SAUfIhLblxzOtfux3xJRdAPs8G9Uek1toYoITHY0KWVLmEsgo99YEZnVJEt+7NRis1W6+l/bRZrqp6FwX1DhyttdftAg3Fu2mFPvcGIIUfsqMTiIXLe5kJ+H47fG+TU4za1as7LTsEwwvK0LET+SpWkYl6adl8U2kXgM04q9Mlcn76du4hlJGowxIVuiVojXWRvLjrdllWYKrlj7g8YHNGepIySVu10YvTn6toPHb8xsMo2BnEfVIYJBK8bgOgBvJI0sDXh65LPLFj7w==&key=khqr", 50: "https://acledabank.com.kh/acleda?payment_data=qWY5B2SAUfIhLblxzOtfux3xJRdAPs8G9Uek1toYoITHY0KWVLmEsgo99YEZnVJEt+7NRis1W6+l/bRZrqp6FwX1DhyttdftAg3Fu2mFPvcGIIUfsqMTiIXLe5kJ+H47uO0z2u7jgna0CZPSsVXF7OWFPuvYWQTY0pUzHRSmXn12ZA8YLvgje2vwKrJUTdEF7iYsRhHK8GwlwETjvQXK92WxkyBsnrHaVlmz1qlEHFsvJFLsX0gjmr9T9bWQGk3gU6bqBoJCGlGpUy8l2lVnvg==&key=khqr", 60: "https://acledabank.com.kh/acleda?payment_data=qWY5B2SAUfIhLblxzOtfux3xJRdAPs8G9Uek1toYoITHY0KWVLmEsgo99YEZnVJEt+7NRis1W6+l/bRZrqp6FwX1DhyttdftAg3Fu2mFPvcGIIUfsqMTiIXLe5kJ+H47M0X78ogYLvWv+wLSpCiw+L7emvq1sAj3L0yiWPlyzInsJygk+wqQSaxmRLbT9tTfNo4pIsXG0p2XP/hyvPNwK/Yvpbd+u0O0ztBin5HCJS2bmaf8QYmz/Dn3jc+Ohc4TAep9lZW/HU6U3tE+5EufZA==&key=khqr", 120: "https://acledabank.com.kh/acleda?payment_data=qWY5B2SAUfIhLblxzOtfux3xJRdAPs8G9Uek1toYoITHY0KWVLmEsgo99YEZnVJEt+7NRis1W6+l/bRZrqp6FwX1DhyttdftAg3Fu2mFPvcGIIUfsqMTiIXLe5kJ+H47/gVojjGeiP8WBPhadCf6tm8hsxoLFO1HEALufxB6JAQ5ZXxv4VtdwEeG/tsnOND7tReVAUxkyChxZczISuRwdWxm8H3X3UkDMfFmibAdstERnLU1h4pK/8oSM1JQF0o0aujskOd+n32Hq8HAAfZslA==&key=khqr" };
+    const types = ["កាហ្វេ", "ពន្លៃ", "ហាយឡាយ", "ប័រ", "អំពិល", "ស្រូវសាលី", "ស្ត្រប៊ឺរី"];
     let selectedQty = 0, selectedArea = "ភ្នំពេញ", isWaiting = false;
+
+    function toEnNum(el) {
+        const map = {'០':'0','១':'1','២':'2','៣':'3','៤':'4','៥':'5','៦':'6','៧':'7','៨':'8','៩':'9'};
+        let v = el.value;
+        for (let k in map) v = v.split(k).join(map[k]);
+        el.value = v.replace(/[^0-9]/g, '');
+    }
 
     const qtyDiv = document.getElementById('qty-container');
     Object.keys(prices).forEach(q => {
-        const b = document.createElement('button'); b.className = 'qty-btn'; b.innerText = q + " កំប៉ុង";
+        const b = document.createElement('button'); b.className = 'qty-btn'; 
+        b.innerHTML = `${q} កំប៉ុង<span>(${q}kg)</span>`;
         b.onclick = () => { selectedQty = parseInt(q); document.querySelectorAll('.qty-btn').forEach(btn => btn.classList.remove('active')); b.classList.add('active'); document.getElementById('display-total').innerText = prices[selectedQty].toLocaleString(); };
         qtyDiv.appendChild(b);
     });
 
     const typeDiv = document.getElementById('type-container');
-    types.forEach(t => { typeDiv.innerHTML += `<div class="type-item"><span>${t}</span><input type="text" class="type-input" value="0" oninput="convertAndValidate(this)"></div>`; });
-
-    function convertAndValidate(el) {
-        const khNumbers = {'០':'0','១':'1','២':'2','៣':'3','៤':'4','៥':'5','៦':'6','៧':'7','៨':'8','៩':'9'};
-        let val = el.value; for (let key in khNumbers) { val = val.split(key).join(khNumbers[key]); }
-        el.value = val.replace(/[^0-9]/g, '');
-    }
+    types.forEach(t => { typeDiv.innerHTML += `<div class="type-item"><span>${t}</span><input type="text" class="type-input" value="0" oninput="toEnNum(this)"></div>`; });
 
     function selectLoc(area) {
         selectedArea = area;
@@ -129,29 +123,24 @@
     async function handleSubmit(method) {
         const phone = document.getElementById('phone').value, addr = document.getElementById('address').value;
         let current = 0; document.querySelectorAll('.type-input').forEach(i => current += parseInt(i.value) || 0);
-        if (!selectedQty || current !== selectedQty || !phone || !addr) return alert("សូមបំពេញព័ត៌មានឱ្យត្រឹមត្រូវ និងគ្រប់ចំនួនកំប៉ុង!");
-
+        if (!selectedQty || current !== selectedQty || !phone || !addr) return alert("សូមបំពេញឱ្យបានត្រឹមត្រូវ!");
         document.getElementById('loading-overlay').style.display = 'flex';
-        if (method === 'ABA') { isWaiting = true; window.location.href = abaLinks[selectedQty]; }
-        else if (method === 'AC_LEDA') { isWaiting = true; window.location.href = acledaLinks[selectedQty]; }
-        else { await sendToTelegram("COD (អ្នកភ្នំពេញ)"); alert("ជោគជ័យ! យើងនឹងតេទៅបញ្ជាក់ក្នុងពេលឆាប់ៗ។"); window.location.href = "https://t.me/+85586882636"; }
+        if (method === 'បង់តាម ABA') { isWaiting = true; window.location.href = abaLinks[selectedQty]; }
+        else if (method === 'បង់តាម Acleda') { isWaiting = true; window.location.href = acledaLinks[selectedQty]; }
+        else { await sendToTelegram("COD (អ្នកភ្នំពេញ)"); alert("ជោគជ័យ! យើងនឹងតេទៅបញ្ជាក់។"); window.location.href = "https://t.me/+85586882636"; }
     }
 
     document.addEventListener("visibilitychange", function() { 
-        if (document.visibilityState === 'visible' && isWaiting) { 
-            sendToTelegram("បានបង់ប្រាក់រួចរាល់ (រង់ចាំការពិនិត្យ)"); isWaiting = false;
-            window.location.href = "https://t.me/+85586882636"; 
-        } 
+        if (document.visibilityState === 'visible' && isWaiting) { sendToTelegram("បានបង់ប្រាក់រួចរាល់"); isWaiting = false; window.location.href = "https://t.me/+85586882636"; } 
     });
 
     async function sendToTelegram(status) {
         const phone = document.getElementById('phone').value, addr = document.getElementById('address').value;
-        let details = ""; document.querySelectorAll('.type-input').forEach((input, idx) => { if (parseInt(input.value) > 0) details += `\n- ${types[idx]}: ${input.value}`; });
-        const msg = `📦 *កម្ម៉ង់ថ្មី (${selectedArea})*\n📞 លេខ: ${phone}\n📍 ទីតាំង: ${addr}\n🛒 ទំនិញ: ${selectedQty}កំប៉ុង${details}\n💰 សរុប: ${prices[selectedQty].toLocaleString()}៛\n💳 ស្ថានភាព: ${status}`;
+        let details = ""; document.querySelectorAll('.type-input').forEach((input, idx) => { if (parseInt(input.value) > 0) details += `\n- ${types[idx]}: ${input.value}កំប៉ុង`; });
+        const msg = `🔔 *មានការកម្ម៉ង់ថ្មី!*\n📍 តំបន់: ${selectedArea}\n📞 លេខ: \`${phone}\` \n🏠 អាសយដ្ឋាន: ${addr}\n🛒 ទំនិញ: ${selectedQty} កំប៉ុង (${selectedQty}kg) ${details}\n💰 សរុប: ${prices[selectedQty].toLocaleString()} ៛\n💳 ស្ថានភាព: ${status}`;
         const TOKEN = '8550988878:AAE8pkMzHJ87tbJZClJ4KkA8CfKtZVtPISo';
-        for (const id of ['557314967', '1047599945']) { 
-            await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ chat_id: id, text: msg, parse_mode: 'Markdown' }) }); 
-        }
+        const CHAT_IDS = ['557314967', '1047599945'];
+        for (const id of CHAT_IDS) { await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ chat_id: id, text: msg, parse_mode: 'Markdown' }) }); }
     }
 </script>
 </body>
