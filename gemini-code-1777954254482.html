@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>KD NATURAL - Complete System</title>
+    <style>
+        :root { --aba: #005d7d; --primary: #8e5a2d; --accent: #e67e22; --bg: #fdfaf7; }
+        body { font-family: 'Kantumruy Pro', sans-serif; background: var(--bg); margin: 0; padding-bottom: 20px; color: #333; }
+        .header { background: white; padding: 15px; text-align: center; border-bottom: 3px solid var(--primary); }
+        .container { max-width: 500px; margin: auto; padding: 15px; }
+        .section { background: white; padding: 20px; border-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .title { font-weight: bold; color: var(--primary); margin-bottom: 15px; display: block; border-left: 4px solid var(--accent); padding-left: 10px; }
+        
+        /* ជ្រើសរើសចំនួនសរុប */
+        .qty-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .qty-btn { padding: 12px 5px; border: 1.5px solid #eee; background: white; border-radius: 12px; font-weight: bold; cursor: pointer; }
+        .qty-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+        /* ជ្រើសរើសប្រភេទស្ក្រាប់ */
+        .type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+        .type-item { display: flex; justify-content: space-between; align-items: center; background: #f9f9f9; padding: 10px; border-radius: 12px; }
+        .type-input { width: 50px; text-align: center; border: 1.5px solid #ddd; border-radius: 8px; padding: 8px 5px; font-weight: bold; color: var(--aba); }
+
+        /* តំបន់ដឹកជញ្ជូន */
+        .loc-selector { display: flex; gap: 10px; margin-bottom: 15px; }
+        .loc-btn { flex: 1; padding: 12px; border-radius: 12px; border: 1.5px solid #eee; background: white; cursor: pointer; font-weight: bold; text-align: center; }
+        .loc-btn.active { border-color: var(--aba); color: var(--aba); background: #f0f7ff; }
+
+        input, textarea { width: 100%; padding: 14px; margin: 8px 0; border-radius: 12px; border: 1.5px solid #eee; box-sizing: border-box; font-size: 16px; }
+        .btn-main { background: var(--aba); color: white; border: none; padding: 18px; width: 100%; border-radius: 15px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        
+        #success-msg { display: none; text-align: center; padding: 60px 20px; }
+    </style>
+</head>
+<body>
+
+<div id="order-form">
+    <div class="header"><h3>KD NATURAL - បញ្ជាទិញ</h3></div>
+    <div class="container">
+        <!-- ១. រើសចំនួនសរុប -->
+        <div class="section">
+            <span class="title">១. ជ្រើសរើសចំនួនសរុប៖</span>
+            <div class="qty-grid" id="qty-container"></div>
+        </div>
+
+        <!-- ២. រើសប្រភេទស្ក្រាប់ -->
+        <div class="section">
+            <span class="title">២. បញ្ជាក់ប្រភេទស្ក្រាប់ (វាយលេខខ្មែរបាន)៖</span>
+            <div class="type-grid" id="type-container"></div>
+            <p id="sum-status" style="font-size: 13px; color: red; margin-top: 10px; text-align: center; font-weight: bold;"></p>
+        </div>
+
+        <!-- ៣. ព័ត៌មានដឹកជញ្ជូន -->
+        <div class="section">
+            <span class="title">៣. ព័ត៌មានដឹកជញ្ជូន៖</span>
+            <div class="loc-selector">
+                <div class="loc-btn active" id="btn-pp" onclick="setArea('ភ្នំពេញ')">ភ្នំពេញ</div>
+                <div class="loc-btn" id="btn-province" onclick="setArea('តាមខេត្ត')">តាមខេត្ត</div>
+            </div>
+            <input type="tel" id="phone" placeholder="លេខទូរស័ព្ទ *">
+            <input type="text" id="loc" placeholder="អាសយដ្ឋានដឹកជញ្ជូន *">
+            <textarea id="note" placeholder="សម្គាល់ផ្សេងៗ..."></textarea>
+        </div>
+
+        <div style="text-align: center; margin-bottom: 15px;">
+            <b style="color: var(--accent); font-size: 22px;">សរុបត្រូវបង់៖ <span id="display-total">0</span> ៛</b>
+        </div>
+        
+        <button class="btn-main" id="btn-submit" onclick="handleOrder()">បញ្ជាទិញឥឡូវនេះ</button>
+    </div>
+</div>
+
+<div id="success-msg">
+    <h1 style="font-size: 60px; margin-bottom: 10px;">✅</h1>
+    <h2 style="color: var(--aba); margin-top: 0;">កម្ម៉ង់ទទួលបានជោគជ័យ!</h2>
+    <p>យើងខ្ញុំទទួលបានទិន្នន័យរបស់អ្នកហើយ។</p>
+    <button onclick="location.reload()" style="padding: 10px 20px; border-radius: 10px; border: 1px solid #ddd; background: white; cursor: pointer;">ត្រឡប់ក្រោយ</button>
+</div>
+
+<script>
+    const prices = { 1: 16000, 5: 40000, 10: 68000, 20: 120000, 30: 180000, 50: 280000 };
+    const types = ["កាហ្វេ", "ពន្លៃ", "ហាយឡាយ", "ប័រ", "អំពិលទុំ", "ស្រូវសាលី", "ស្ត្រប៊ឺរី"];
+    let selectedQty = 0;
+    let selectedArea = "ភ្នំពេញ";
+    let isWaitingForPayment = false;
+    const ABA_ACC = "001784138";
+
+    // មុខងារប្តូរលេខខ្មែរទៅអង់គ្លេស
+    function khToEn(str) {
+        const kh = ['០', '១', '២', '៣', '៤', '៥', '៦', '៧', '៨', '៩'];
+        return str.toString().replace(/[០-៩]/g, s => kh.indexOf(s));
+    }
+
+    // ១. បង្កើតប៊ូតុងចំនួនសរុប
+    const qtyDiv = document.getElementById('qty-container');
+    Object.keys(prices).forEach(q => {
+        const b = document.createElement('button');
+        b.className = 'qty-btn'; b.innerText = q + " កំប៉ុង";
+        b.onclick = () => {
+            selectedQty = parseInt(q);
+            document.querySelectorAll('.qty-btn').forEach(btn => btn.classList.remove('active'));
+            b.classList.add('active');
+            document.getElementById('display-total').innerText = prices[selectedQty].toLocaleString();
+            updateSumStatus();
+        };
+        qtyDiv.appendChild(b);
+    });
+
+    // ២. បង្កើតប្រអប់រើសប្រភេទស្ក្រាប់
+    const typeDiv = document.getElementById('type-container');
+    types.forEach(t => {
+        typeDiv.innerHTML += `
+            <div class="type-item">
+                <span>${t}</span>
+                <input type="text" class="type-input" value="0" oninput="validateInput(this)">
+            </div>`;
+    });
+
+    function validateInput(input) {
+        input.value = khToEn(input.value).replace(/[^0-9]/g, ''); // ប្តូរលេខខ្មែរ និងយកតែលេខ
+        updateSumStatus();
+    }
+
+    function updateSumStatus() {
+        let currentSum = 0;
+        document.querySelectorAll('.type-input').forEach(input => {
+            currentSum += parseInt(input.value) || 0;
+        });
+        
+        const status = document.getElementById('sum-status');
+        if (selectedQty === 0) {
+            status.innerText = "⚠️ សូមរើសចំនួនសរុបជាមុន";
+        } else if (currentSum !== selectedQty) {
+            status.innerText = `⚠️ ត្រូវរើសឱ្យគ្រប់ ${selectedQty} កំប៉ុង (បច្ចុប្បន្ន: ${currentSum})`;
+            status.style.color = "red";
+        } else {
+            status.innerText = "✅ ចំនួនត្រឹមត្រូវហើយ";
+            status.style.color = "green";
+        }
+        return currentSum;
+    }
+
+    function setArea(area) {
+        selectedArea = area;
+        document.getElementById('btn-pp').classList.toggle('active', area === 'ភ្នំពេញ');
+        document.getElementById('btn-province').classList.toggle('active', area === 'តាមខេត្ត');
+        
+        const btn = document.getElementById('btn-submit');
+        if (area === 'តាមខេត្ត') {
+            btn.innerText = "បង់ប្រាក់ និងបញ្ចប់ការកម្ម៉ង់";
+            btn.style.background = "#005d7d";
+        } else {
+            btn.innerText = "បញ្ជាទិញឥឡូវនេះ";
+            btn.style.background = "#8e5a2d";
+        }
+    }
+
+    function handleOrder() {
+        const phone = document.getElementById('phone').value.trim();
+        const loc = document.getElementById('loc').value.trim();
+        const currentSum = updateSumStatus();
+
+        if (!selectedQty) return alert("សូមជ្រើសរើសចំនួនសរុប!");
+        if (currentSum !== selectedQty) return alert(`សូមជ្រើសរើសប្រភេទស្ក្រាប់ឱ្យគ្រប់ ${selectedQty} កំប៉ុង!`);
+        if (!phone || !loc) return alert("សូមបំពេញលេខទូរស័ព្ទ និងទីតាំងដឹកជញ្ជូន!");
+
+        if (selectedArea === 'តាមខេត្ត') {
+            // លោតទៅបង់ប្រាក់សិន
+            isWaitingForPayment = true;
+            const amount = prices[selectedQty];
+            window.location.href = `https://link.ababank.com/pay?id=${ABA_ACC}&amount=${amount}&currency=KHR`;
+        } else {
+            // បើនៅភ្នំពេញ ផ្ញើទៅ Telegram ភ្លាម
+            sendOrderToTelegram("COD (ភ្នំពេញ)");
+        }
+    }
+
+    // ឆែកមើលពេលអតិថិជនត្រឡប់មកពី ABA វិញ
+    document.addEventListener("visibilitychange", function() {
+        if (document.visibilityState === 'visible' && isWaitingForPayment) {
+            sendOrderToTelegram("បង់រួច (តាមខេត្ត)");
+            isWaitingForPayment = false;
+        }
+    });
+
+    async function sendOrderToTelegram(statusLabel) {
+        const phone = document.getElementById('phone').value;
+        const loc = document.getElementById('loc').value;
+        const note = document.getElementById('note').value;
+        
+        let typeDetails = "";
+        document.querySelectorAll('.type-input').forEach((input, index) => {
+            if (parseInt(input.value) > 0) {
+                typeDetails += `\n- ${types[index]}: ${input.value} កំប៉ុង`;
+            }
+        });
+
+        const amount = prices[selectedQty].toLocaleString();
+        const message = `🛍️ *កម្ម៉ង់ថ្មី - ${statusLabel}*\n━━━━━━━━━━━━━━\n📞 លេខ: ${phone}\n📍 តំបន់: ${selectedArea}\n🏠 ទីតាំង: ${loc}\n📦 ចំនួនសរុប: ${selectedQty} កំប៉ុង${typeDetails}\n📝 ចំណាំ: ${note || 'គ្មាន'}\n💰 ទឹកប្រាក់: ${amount} ៛\n━━━━━━━━━━━━━━`;
+
+        const TOKEN = '8550988878:AAE8pkMzHJ87tbJZClJ4KkA8CfKtZVtPISo';
+        const CHATS = ['557314967', '1047599945'];
+
+        try {
+            for (const id of CHATS) {
+                await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ chat_id: id, text: message, parse_mode: 'Markdown' })
+                });
+            }
+            document.getElementById('order-form').style.display = 'none';
+            document.getElementById('success-msg').style.display = 'block';
+        } catch (e) { alert("Error sending message!"); }
+    }
+</script>
+</body>
+</html>
