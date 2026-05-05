@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>KD NATURAL - Order Page</title>
+    <title>KD Natural Scrub - Order Page</title>
     <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { --aba: #005d7d; --gold: #b8860b; --dark: #2c3e50; }
@@ -11,7 +11,8 @@
         
         .header-container { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; border-bottom: 1px solid #eee; background: #fffcf5; }
         .side-img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; border: 1px solid var(--gold); }
-        .header-title { flex: 1; text-align: center; font-size: 15px; font-weight: bold; color: var(--dark); }
+        .header-title { flex: 1; text-align: center; font-size: 14px; font-weight: bold; color: var(--dark); line-height: 1.4; }
+        .header-title span { display: block; font-size: 16px; color: var(--gold); }
 
         .container { max-width: 450px; margin: auto; padding: 5px 10px; }
         .section { background: #fafafa; padding: 8px; border-radius: 12px; border: 1px solid #f0f0f0; margin-bottom: 6px; }
@@ -46,7 +47,10 @@
 
 <div class="header-container">
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR61fIqIu9G7T-S0vEunwS1M8E6vH4-m0vW3w&s" class="side-img">
-    <div class="header-title">KD NATURAL SKINCARE</div>
+    <div class="header-title">
+        <span>KDស្ក្រាប់ធម្មជាតិ</span>
+        KD Natural Scrub
+    </div>
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR61fIqIu9G7T-S0vEunwS1M8E6vH4-m0vW3w&s" class="side-img">
 </div>
 
@@ -99,7 +103,7 @@
     types.forEach(t => { typeDiv.innerHTML += `<div class="type-item"><span>${t}</span><input type="text" class="type-input" value="0" oninput="convertAndValidate(this)"></div>`; });
 
     function convertAndValidate(el) {
-        const khNumbers = {'០':'0','១':'1','២':'2','៣':'3','៤':'4','៥':'5','៦':'6','៧':'7','៨':'8','៩':'9'};
+        const khNumbers = {'០':'0','១':'1','២':'2','៣':'3','៤':'4','៥':'5','៦':'6','７':'7','៨':'8','៩':'9'};
         let val = el.value;
         for (let key in khNumbers) { val = val.split(key).join(khNumbers[key]); }
         el.value = val.replace(/[^0-9]/g, '');
@@ -135,7 +139,7 @@
     // មុខងារពេលអតិថិជនបង់លុយរួចហើយចុច Back មកវិញ
     document.addEventListener("visibilitychange", function() { 
         if (document.visibilityState === 'visible' && isWaiting) { 
-            sendToTelegram("បង់តាម ABA (រង់ចាំការបញ្ជាក់វិក្កយបត្រ)"); 
+            sendToTelegram("បានបង់តាម ABA (រង់ចាំការបញ្ជាក់វិក្កយបត្រ)"); 
             isWaiting = false;
             document.getElementById('loading-overlay').style.display = 'none';
             alert("ការបង់ប្រាក់បានបញ្ជូន! សូមផ្ញើរូបភាពវិក្កយបត្រ (Screenshot) មកកាន់ Telegram ហាង។");
