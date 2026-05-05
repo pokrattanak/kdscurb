@@ -3,216 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>KD NATURAL - Complete System</title>
+    <title>KD NATURAL - Order Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --aba: #005d7d; --primary: #8e5a2d; --accent: #e67e22; --bg: #fdfaf7; }
-        body { font-family: 'Kantumruy Pro', sans-serif; background: var(--bg); margin: 0; padding-bottom: 20px; color: #333; }
-        .header { background: white; padding: 15px; text-align: center; border-bottom: 3px solid var(--primary); }
-        .container { max-width: 500px; margin: auto; padding: 15px; }
-        .section { background: white; padding: 20px; border-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .title { font-weight: bold; color: var(--primary); margin-bottom: 15px; display: block; border-left: 4px solid var(--accent); padding-left: 10px; }
+        :root { --aba: #005d7d; --gold: #b8860b; --dark: #2c3e50; }
+        body { font-family: 'Kantumruy Pro', sans-serif; background: #ffffff; margin: 0; padding: 0; color: #333; overflow-x: hidden; }
         
-        /* ជ្រើសរើសចំនួនសរុប */
-        .qty-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        .qty-btn { padding: 12px 5px; border: 1.5px solid #eee; background: white; border-radius: 12px; font-weight: bold; cursor: pointer; }
-        .qty-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+        .header-container { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; border-bottom: 1px solid #eee; background: #fffcf5; }
+        .side-img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; border: 1px solid var(--gold); }
+        .header-title { flex: 1; text-align: center; font-size: 15px; font-weight: bold; color: var(--dark); }
 
-        /* ជ្រើសរើសប្រភេទស្ក្រាប់ */
-        .type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-        .type-item { display: flex; justify-content: space-between; align-items: center; background: #f9f9f9; padding: 10px; border-radius: 12px; }
-        .type-input { width: 50px; text-align: center; border: 1.5px solid #ddd; border-radius: 8px; padding: 8px 5px; font-weight: bold; color: var(--aba); }
-
-        /* តំបន់ដឹកជញ្ជូន */
-        .loc-selector { display: flex; gap: 10px; margin-bottom: 15px; }
-        .loc-btn { flex: 1; padding: 12px; border-radius: 12px; border: 1.5px solid #eee; background: white; cursor: pointer; font-weight: bold; text-align: center; }
-        .loc-btn.active { border-color: var(--aba); color: var(--aba); background: #f0f7ff; }
-
-        input, textarea { width: 100%; padding: 14px; margin: 8px 0; border-radius: 12px; border: 1.5px solid #eee; box-sizing: border-box; font-size: 16px; }
-        .btn-main { background: var(--aba); color: white; border: none; padding: 18px; width: 100%; border-radius: 15px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        .container { max-width: 450px; margin: auto; padding: 5px 10px; }
+        .section { background: #fafafa; padding: 8px; border-radius: 12px; border: 1px solid #f0f0f0; margin-bottom: 6px; }
+        .title { font-weight: bold; color: var(--gold); margin-bottom: 5px; font-size: 12px; display: block; }
         
-        #success-msg { display: none; text-align: center; padding: 60px 20px; }
+        .qty-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+        .qty-btn { padding: 8px 1px; border: 1px solid #ddd; background: white; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; transition: 0.2s; }
+        .qty-btn.active { background: var(--gold); color: white; border-color: var(--gold); }
+
+        .type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+        .type-item { display: flex; justify-content: space-between; align-items: center; background: #fff; border: 1px solid #eee; padding: 3px 8px; border-radius: 6px; font-size: 12px; }
+        .type-input { width: 35px; text-align: center; border: 1px solid #ccc; border-radius: 4px; padding: 3px; font-weight: bold; outline: none; }
+
+        .location-selector { display: flex; gap: 5px; margin-bottom: 5px; }
+        .loc-btn { flex: 1; padding: 10px 2px; border: 1px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 10px; font-weight: bold; }
+        .loc-btn.active { border-color: var(--gold); background: #fffcf0; color: var(--gold); }
+
+        input { width: 100%; padding: 10px; margin: 2px 0; border-radius: 8px; border: 1px solid #eee; box-sizing: border-box; font-size: 13px; outline: none; }
+        .btn-submit { color: white; border: none; padding: 14px; width: 100%; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 5px; }
+        .btn-aba { background: var(--aba); }
+        .btn-cod { background: #27ae60; }
+
+        #loading-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); z-index: 1000; flex-direction: column; align-items: center; justify-content: center; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-<div id="order-form">
-    <div class="header"><h3>KD NATURAL - បញ្ជាទិញ</h3></div>
-    <div class="container">
-        <!-- ១. រើសចំនួនសរុប -->
-        <div class="section">
-            <span class="title">១. ជ្រើសរើសចំនួនសរុប៖</span>
-            <div class="qty-grid" id="qty-container"></div>
-        </div>
+<div id="loading-overlay"><div style="border: 4px solid #f3f3f3; border-top: 4px solid var(--gold); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite;"></div></div>
 
-        <!-- ២. រើសប្រភេទស្ក្រាប់ -->
-        <div class="section">
-            <span class="title">២. បញ្ជាក់ប្រភេទស្ក្រាប់ (វាយលេខខ្មែរបាន)៖</span>
-            <div class="type-grid" id="type-container"></div>
-            <p id="sum-status" style="font-size: 13px; color: red; margin-top: 10px; text-align: center; font-weight: bold;"></p>
-        </div>
+<div class="header-container">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR61fIqIu9G7T-S0vEunwS1M8E6vH4-m0vW3w&s" class="side-img">
+    <div class="header-title">KD NATURAL SKINCARE</div>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR61fIqIu9G7T-S0vEunwS1M8E6vH4-m0vW3w&s" class="side-img">
+</div>
 
-        <!-- ៣. ព័ត៌មានដឹកជញ្ជូន -->
-        <div class="section">
-            <span class="title">៣. ព័ត៌មានដឹកជញ្ជូន៖</span>
-            <div class="loc-selector">
-                <div class="loc-btn active" id="btn-pp" onclick="setArea('ភ្នំពេញ')">ភ្នំពេញ</div>
-                <div class="loc-btn" id="btn-province" onclick="setArea('តាមខេត្ត')">តាមខេត្ត</div>
-            </div>
-            <input type="tel" id="phone" placeholder="លេខទូរស័ព្ទ *">
-            <input type="text" id="loc" placeholder="អាសយដ្ឋានដឹកជញ្ជូន *">
-            <textarea id="note" placeholder="សម្គាល់ផ្សេងៗ..."></textarea>
-        </div>
+<div class="container">
+    <div class="section">
+        <span class="title">១. ជ្រើសរើសកញ្ចប់</span>
+        <div class="qty-grid" id="qty-container"></div>
+    </div>
 
-        <div style="text-align: center; margin-bottom: 15px;">
-            <b style="color: var(--accent); font-size: 22px;">សរុបត្រូវបង់៖ <span id="display-total">0</span> ៛</b>
+    <div class="section">
+        <span class="title">២. រើសប្រភេទស្ក្រាប់ (បញ្ចូលលេខ)</span>
+        <div class="type-grid" id="type-container"></div>
+    </div>
+
+    <div class="section">
+        <div class="location-selector">
+            <button class="loc-btn" id="btn-pp" onclick="selectLoc('ភ្នំពេញ')">📍 ភ្នំពេញ (COD)</button>
+            <button class="loc-btn" id="btn-province" onclick="selectLoc('ខេត្ត')">🚛 ខេត្ត (ABA)</button>
         </div>
-        
-        <button class="btn-main" id="btn-submit" onclick="handleOrder()">បញ្ជាទិញឥឡូវនេះ</button>
+        <input type="tel" id="phone" placeholder="លេខទូរស័ព្ទ *">
+        <input type="text" id="address" placeholder="អាសយដ្ឋានដឹកជញ្ជូន *">
+    </div>
+
+    <div style="text-align: center; margin: 5px 0;">
+        <b style="color: var(--dark); font-size: 18px;">សរុប៖ <span id="display-total">0</span> ៛</b>
+    </div>
+    
+    <button id="main-submit-btn" class="btn-submit btn-aba" onclick="handleSubmit()">សូមជ្រើសរើសតំបន់</button>
+
+    <div style="text-align:center; font-size:11px; margin-top:8px; color:#999;">
+        ជំនួយ៖ <a href="tel:086882636" style="color:var(--gold); text-decoration:none;">086 882 636</a>
     </div>
 </div>
 
-<div id="success-msg">
-    <h1 style="font-size: 60px; margin-bottom: 10px;">✅</h1>
-    <h2 style="color: var(--aba); margin-top: 0;">កម្ម៉ង់ទទួលបានជោគជ័យ!</h2>
-    <p>យើងខ្ញុំទទួលបានទិន្នន័យរបស់អ្នកហើយ។</p>
-    <button onclick="location.reload()" style="padding: 10px 20px; border-radius: 10px; border: 1px solid #ddd; background: white; cursor: pointer;">ត្រឡប់ក្រោយ</button>
-</div>
-
 <script>
-    const prices = { 1: 16000, 5: 40000, 10: 68000, 20: 120000, 30: 180000, 50: 280000 };
+    const prices = { 1: 16000, 5: 40000, 10: 68000, 12: 72000, 20: 120000, 30: 180000, 50: 280000, 60: 336000, 120: 624000 };
+    const abaLinks = { 1: "https://pay.ababank.com/oRF8/t39mcrjz", 5: "https://pay.ababank.com/oRF8/b1o5fleo", 10: "https://pay.ababank.com/oRF8/8v5jzs1a", 12: "https://pay.ababank.com/oRF8/lls1tbur", 20: "https://pay.ababank.com/oRF8/680t8x4b", 30: "https://pay.ababank.com/oRF8/yqbo08ca", 50: "https://pay.ababank.com/oRF8/78hlhjpb", 60: "https://pay.ababank.com/oRF8/d77egydd", 120: "https://pay.ababank.com/oRF8/ckm2u0p2" };
     const types = ["កាហ្វេ", "ពន្លៃ", "ហាយឡាយ", "ប័រ", "អំពិលទុំ", "ស្រូវសាលី", "ស្ត្រប៊ឺរី"];
-    let selectedQty = 0;
-    let selectedArea = "ភ្នំពេញ";
-    let isWaitingForPayment = false;
-    const ABA_ACC = "001784138";
+    let selectedQty = 0, selectedArea = "", isWaiting = false;
 
-    // មុខងារប្តូរលេខខ្មែរទៅអង់គ្លេស
-    function khToEn(str) {
-        const kh = ['០', '១', '២', '៣', '៤', '៥', '៦', '៧', '៨', '៩'];
-        return str.toString().replace(/[០-៩]/g, s => kh.indexOf(s));
-    }
-
-    // ១. បង្កើតប៊ូតុងចំនួនសរុប
     const qtyDiv = document.getElementById('qty-container');
     Object.keys(prices).forEach(q => {
-        const b = document.createElement('button');
-        b.className = 'qty-btn'; b.innerText = q + " កំប៉ុង";
-        b.onclick = () => {
-            selectedQty = parseInt(q);
-            document.querySelectorAll('.qty-btn').forEach(btn => btn.classList.remove('active'));
-            b.classList.add('active');
-            document.getElementById('display-total').innerText = prices[selectedQty].toLocaleString();
-            updateSumStatus();
-        };
+        const b = document.createElement('button'); b.className = 'qty-btn'; b.innerText = q + " កំប៉ុង";
+        b.onclick = () => { selectedQty = parseInt(q); document.querySelectorAll('.qty-btn').forEach(btn => btn.classList.remove('active')); b.classList.add('active'); document.getElementById('display-total').innerText = prices[selectedQty].toLocaleString(); };
         qtyDiv.appendChild(b);
     });
 
-    // ២. បង្កើតប្រអប់រើសប្រភេទស្ក្រាប់
     const typeDiv = document.getElementById('type-container');
-    types.forEach(t => {
-        typeDiv.innerHTML += `
-            <div class="type-item">
-                <span>${t}</span>
-                <input type="text" class="type-input" value="0" oninput="validateInput(this)">
-            </div>`;
-    });
+    types.forEach(t => { typeDiv.innerHTML += `<div class="type-item"><span>${t}</span><input type="text" class="type-input" value="0" oninput="convertAndValidate(this)"></div>`; });
 
-    function validateInput(input) {
-        input.value = khToEn(input.value).replace(/[^0-9]/g, ''); // ប្តូរលេខខ្មែរ និងយកតែលេខ
-        updateSumStatus();
+    // មុខងារប្តូរលេខខ្មែរទៅលេខអង់គ្លេស
+    function convertAndValidate(el) {
+        const khNumbers = {'០':'0','១':'1','២':'2','៣':'3','៤':'4','៥':'5','៦':'6','៧':'7','៨':'8','៩':'9'};
+        let val = el.value;
+        // ប្តូរខ្មែរ -> អង់គ្លេស
+        for (let key in khNumbers) { val = val.split(key).join(khNumbers[key]); }
+        // យកតែលេខអង់គ្លេស
+        el.value = val.replace(/[^0-9]/g, '');
     }
 
-    function updateSumStatus() {
-        let currentSum = 0;
-        document.querySelectorAll('.type-input').forEach(input => {
-            currentSum += parseInt(input.value) || 0;
-        });
-        
-        const status = document.getElementById('sum-status');
-        if (selectedQty === 0) {
-            status.innerText = "⚠️ សូមរើសចំនួនសរុបជាមុន";
-        } else if (currentSum !== selectedQty) {
-            status.innerText = `⚠️ ត្រូវរើសឱ្យគ្រប់ ${selectedQty} កំប៉ុង (បច្ចុប្បន្ន: ${currentSum})`;
-            status.style.color = "red";
-        } else {
-            status.innerText = "✅ ចំនួនត្រឹមត្រូវហើយ";
-            status.style.color = "green";
-        }
-        return currentSum;
-    }
-
-    function setArea(area) {
+    function selectLoc(area) {
         selectedArea = area;
         document.getElementById('btn-pp').classList.toggle('active', area === 'ភ្នំពេញ');
-        document.getElementById('btn-province').classList.toggle('active', area === 'តាមខេត្ត');
+        document.getElementById('btn-province').classList.toggle('active', area === 'ខេត្ត');
+        const btn = document.getElementById('main-submit-btn');
+        btn.innerText = area === 'ភ្នំពេញ' ? "កម្ម៉ង់ឥឡូវ (បានឥវ៉ាន់ចាំឱ្យលុយ)" : "បង់ប្រាក់តាម ABA ឥឡូវនេះ";
+        btn.className = area === 'ភ្នំពេញ' ? "btn-submit btn-cod" : "btn-submit btn-aba";
+    }
+
+    async function handleSubmit() {
+        const phone = document.getElementById('phone').value, addr = document.getElementById('address').value;
+        let current = 0; document.querySelectorAll('.type-input').forEach(i => current += parseInt(i.value) || 0);
+        if (!selectedQty || current !== selectedQty || !phone || !addr || !selectedArea) return alert("សូមបំពេញព័ត៌មានឱ្យត្រឹមត្រូវ និងគ្រប់ចំនួនកំប៉ុង!");
         
-        const btn = document.getElementById('btn-submit');
-        if (area === 'តាមខេត្ត') {
-            btn.innerText = "បង់ប្រាក់ និងបញ្ចប់ការកម្ម៉ង់";
-            btn.style.background = "#005d7d";
-        } else {
-            btn.innerText = "បញ្ជាទិញឥឡូវនេះ";
-            btn.style.background = "#8e5a2d";
+        document.getElementById('loading-overlay').style.display = 'flex';
+        if (selectedArea === 'ខេត្ត') { 
+            isWaiting = true; window.location.href = abaLinks[selectedQty]; 
+        } else { 
+            await sendToTelegram("COD (អ្នកភ្នំពេញ)"); 
+            alert("ជោគជ័យ! យើងនឹងតេទៅបញ្ជាក់ក្នុងពេលឆាប់ៗ។"); 
+            window.location.href = "https://t.me/+85586882636"; 
         }
     }
 
-    function handleOrder() {
-        const phone = document.getElementById('phone').value.trim();
-        const loc = document.getElementById('loc').value.trim();
-        const currentSum = updateSumStatus();
+    document.addEventListener("visibilitychange", function() { if (document.visibilityState === 'visible' && isWaiting) { sendToTelegram("ABA (បានចុច)"); window.location.href = "https://t.me/+85586882636"; } });
 
-        if (!selectedQty) return alert("សូមជ្រើសរើសចំនួនសរុប!");
-        if (currentSum !== selectedQty) return alert(`សូមជ្រើសរើសប្រភេទស្ក្រាប់ឱ្យគ្រប់ ${selectedQty} កំប៉ុង!`);
-        if (!phone || !loc) return alert("សូមបំពេញលេខទូរស័ព្ទ និងទីតាំងដឹកជញ្ជូន!");
-
-        if (selectedArea === 'តាមខេត្ត') {
-            // លោតទៅបង់ប្រាក់សិន
-            isWaitingForPayment = true;
-            const amount = prices[selectedQty];
-            window.location.href = `https://link.ababank.com/pay?id=${ABA_ACC}&amount=${amount}&currency=KHR`;
-        } else {
-            // បើនៅភ្នំពេញ ផ្ញើទៅ Telegram ភ្លាម
-            sendOrderToTelegram("COD (ភ្នំពេញ)");
-        }
-    }
-
-    // ឆែកមើលពេលអតិថិជនត្រឡប់មកពី ABA វិញ
-    document.addEventListener("visibilitychange", function() {
-        if (document.visibilityState === 'visible' && isWaitingForPayment) {
-            sendOrderToTelegram("បង់រួច (តាមខេត្ត)");
-            isWaitingForPayment = false;
-        }
-    });
-
-    async function sendOrderToTelegram(statusLabel) {
-        const phone = document.getElementById('phone').value;
-        const loc = document.getElementById('loc').value;
-        const note = document.getElementById('note').value;
-        
-        let typeDetails = "";
-        document.querySelectorAll('.type-input').forEach((input, index) => {
-            if (parseInt(input.value) > 0) {
-                typeDetails += `\n- ${types[index]}: ${input.value} កំប៉ុង`;
-            }
-        });
-
-        const amount = prices[selectedQty].toLocaleString();
-        const message = `🛍️ *កម្ម៉ង់ថ្មី - ${statusLabel}*\n━━━━━━━━━━━━━━\n📞 លេខ: ${phone}\n📍 តំបន់: ${selectedArea}\n🏠 ទីតាំង: ${loc}\n📦 ចំនួនសរុប: ${selectedQty} កំប៉ុង${typeDetails}\n📝 ចំណាំ: ${note || 'គ្មាន'}\n💰 ទឹកប្រាក់: ${amount} ៛\n━━━━━━━━━━━━━━`;
-
+    async function sendToTelegram(status) {
+        const phone = document.getElementById('phone').value, addr = document.getElementById('address').value;
+        let details = ""; document.querySelectorAll('.type-input').forEach((input, idx) => { if (parseInt(input.value) > 0) details += `\n- ${types[idx]}: ${input.value}`; });
+        const msg = `📦 *កម្ម៉ង់ថ្មី (${selectedArea})*\n📞 លេខ: ${phone}\n📍 ទីតាំង: ${addr}\n🛒 ទំនិញ: ${selectedQty}កំប៉ុង${details}\n💰 សរុប: ${prices[selectedQty].toLocaleString()}៛\n💳 ស្ថានភាព: ${status}`;
         const TOKEN = '8550988878:AAE8pkMzHJ87tbJZClJ4KkA8CfKtZVtPISo';
         const CHATS = ['557314967', '1047599945'];
-
-        try {
-            for (const id of CHATS) {
-                await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ chat_id: id, text: message, parse_mode: 'Markdown' })
-                });
-            }
-            document.getElementById('order-form').style.display = 'none';
-            document.getElementById('success-msg').style.display = 'block';
-        } catch (e) { alert("Error sending message!"); }
+        for (const id of CHATS) { await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ chat_id: id, text: msg, parse_mode: 'Markdown' }) }); }
     }
 </script>
 </body>
